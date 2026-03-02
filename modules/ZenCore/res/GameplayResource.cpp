@@ -1,19 +1,28 @@
 ﻿#include "GameplayResource.h"
 
 GameplayResource::GameplayResource() {
-    player_name = "";
-    level = 1;
-    health = 100.0f;
-    score = 0;
-    inventory = Array();
-    stats = Dictionary();
+
 }
 
 GameplayResource::~GameplayResource() {
 }
 
 void GameplayResource::_bind_methods() {
+
+	ClassDB::bind_method(D_METHOD("set_title", "title"), &GameplayResource::set_title);
+	ClassDB::bind_method(D_METHOD("get_title"), &GameplayResource::get_title);
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "title"), "set_title", "get_title");
+
+	ClassDB::bind_method(D_METHOD("set_description", "description"), &GameplayResource::set_description);
+	ClassDB::bind_method(D_METHOD("get_description"), &GameplayResource::get_description);
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "description"), "set_description", "get_description");
+
+	ClassDB::bind_method(D_METHOD("set_icon", "icon"), &GameplayResource::set_icon);
+	ClassDB::bind_method(D_METHOD("get_icon"), &GameplayResource::get_icon);
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "icon", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_icon", "get_icon");
     // Bind properties
+
+	/*
     ClassDB::bind_method(D_METHOD("set_player_name", "name"), &GameplayResource::set_player_name);
     ClassDB::bind_method(D_METHOD("get_player_name"), &GameplayResource::get_player_name);
 
@@ -45,7 +54,10 @@ void GameplayResource::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::INT, "score"), "set_score", "get_score");
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "inventory"), "set_inventory", "get_inventory");
     ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "stats"), "set_stats", "get_stats");
+    */
 }
+
+/*
 
 // Getters
 String GameplayResource::get_player_name() const {
@@ -127,3 +139,4 @@ void GameplayResource::level_up() {
     health = 100.0f; // Reset health on level up
     emit_changed();
 }
+*/

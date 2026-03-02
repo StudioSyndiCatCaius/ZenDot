@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class N1D_Input {
+class res_ZenInput {
 public:
-	
+
 };

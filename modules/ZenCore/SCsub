@@ -1,9 +1,22 @@
-﻿Import('env')
+﻿#!/usr/bin/env python
+from misc.utility.scons_hints import *
 
-module_env = env.Clone()
-module_env.add_source_files(env.modules_sources, "*.cpp")
-# Append CCFLAGS flags for both C and C++ code.
-module_env.Append(CCFLAGS=['-O2'])
-# If you need to, you can:
-# - Append CFLAGS for C code only.
-# - Append CXXFLAGS for C++ code only.
+Import("env")
+Import("env_modules")
+
+env_zen = env_modules.Clone()
+
+# Configure Mono
+
+# mono_configure.configure(env, env_zen)
+
+# Add sources
+
+env_zen.add_source_files(env.modules_sources, "*.cpp")
+env_zen.add_source_files(env.modules_sources, "1D/*.cpp")
+env_zen.add_source_files(env.modules_sources, "2D/*.cpp")
+env_zen.add_source_files(env.modules_sources, "3D/*.cpp")
+env_zen.add_source_files(env.modules_sources, "res/*.cpp")
+
+if env.editor_build:
+    env_zen.add_source_files(env.modules_sources, "editor/*.cpp")
