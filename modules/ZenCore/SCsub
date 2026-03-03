@@ -6,16 +6,18 @@ Import("env_modules")
 
 env_zen = env_modules.Clone()
 
-# Configure Mono
-
-# mono_configure.configure(env, env_zen)
-
-# Add sources
+# Add Lua include path from the luaAPI module
+env_zen.Append(CPPPATH=[
+    "#modules/luaAPI/external",
+    "#modules/luaAPI/src",
+    "#modules/luaAPI",
+])
 
 env_zen.add_source_files(env.modules_sources, "*.cpp")
 env_zen.add_source_files(env.modules_sources, "1D/*.cpp")
 env_zen.add_source_files(env.modules_sources, "2D/*.cpp")
 env_zen.add_source_files(env.modules_sources, "3D/*.cpp")
+env_zen.add_source_files(env.modules_sources, "G/*.cpp")
 env_zen.add_source_files(env.modules_sources, "res/*.cpp")
 
 if env.editor_build:

@@ -168,7 +168,6 @@ private:
 
 	struct ValueTrack : public Track {
 		UpdateMode update_mode = UPDATE_CONTINUOUS;
-		bool update_on_seek = false;
 		LocalVector<TKey<Variant>> values;
 
 		ValueTrack() {
@@ -513,7 +512,7 @@ public:
 
 	void copy_track(int p_track, Ref<Animation> p_to_animation);
 
-	void track_get_key_indices_in_range(int p_track, double p_time, double p_delta, List<int> *p_indices, Animation::LoopedFlag p_looped_flag = Animation::LOOPED_FLAG_NONE) const;
+	void track_get_key_indices_in_range(int p_track, double p_time, double p_delta, double p_start, double p_end, List<int> *p_indices, Animation::LoopedFlag p_looped_flag = Animation::LOOPED_FLAG_NONE) const;
 
 	void add_marker(const StringName &p_name, double p_time);
 	void remove_marker(const StringName &p_name);
@@ -539,6 +538,10 @@ public:
 
 	void optimize(real_t p_allowed_velocity_err = 0.01, real_t p_allowed_angular_err = 0.01, int p_precision = 3);
 	void compress(uint32_t p_page_size = 8192, uint32_t p_fps = 120, float p_split_tolerance = 4.0); // 4.0 seems to be the split tolerance sweet spot from many tests.
+
+	// Helper functions for Rotation.
+	static double interpolate_via_rest(double p_from, double p_to, double p_weight, double p_rest = 0.0); // Deterministic slerp to prevent to cross the inverted rest axis.
+	static Quaternion interpolate_via_rest(const Quaternion &p_from, const Quaternion &p_to, real_t p_weight, const Quaternion &p_rest = Quaternion()); // Deterministic slerp to prevent to cross the inverted rest axis.
 
 	// Helper functions for Variant.
 	static bool is_variant_interpolatable(const Variant p_value);
