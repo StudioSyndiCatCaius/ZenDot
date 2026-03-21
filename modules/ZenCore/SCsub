@@ -8,6 +8,7 @@ env_zen = env_modules.Clone()
 
 # Add Lua include path from the luaAPI module
 env_zen.Append(CPPPATH=[
+    "#modules/ZenCore",
     "#modules/luaAPI/external",
     "#modules/luaAPI/src",
     "#modules/luaAPI",
@@ -19,6 +20,7 @@ env_zen.add_source_files(env.modules_sources, "2D/*.cpp")
 env_zen.add_source_files(env.modules_sources, "3D/*.cpp")
 env_zen.add_source_files(env.modules_sources, "G/*.cpp")
 env_zen.add_source_files(env.modules_sources, "res/*.cpp")
+env_zen.add_source_files(env.modules_sources, "UI/*.cpp")
 
 if env.editor_build:
     env_zen.add_source_files(env.modules_sources, "editor/*.cpp")

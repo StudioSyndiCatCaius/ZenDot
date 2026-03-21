@@ -42,6 +42,7 @@
 #include "editor/themes/editor_theme.h"
 #include "editor/themes/theme_classic.h"
 #include "editor/themes/theme_modern.h"
+#include "editor/themes/theme_imgui.h"
 #include "scene/resources/style_box_flat.h"
 #include "scene/resources/style_box_line.h"
 #include "scene/resources/style_box_texture.h"
@@ -176,8 +177,18 @@ Ref<EditorTheme> EditorThemeManager::_create_base_theme(const Ref<EditorTheme> &
 	print_verbose(vformat("EditorTheme: Generating new theme for the config '%d'.", theme->get_generated_hash()));
 
 	bool is_default_style = config.style == "Modern";
+	/*
 	if (is_default_style) {
 		ThemeModern::populate_shared_styles(theme, config);
+	} else {
+		ThemeClassic::populate_shared_styles(theme, config);
+	}
+	*/
+
+	if (config.style == "Modern") {
+		ThemeModern::populate_shared_styles(theme, config);
+	} else if (config.style == "ImGui") {
+		ThemeImGui::populate_shared_styles(theme, config);
 	} else {
 		ThemeClassic::populate_shared_styles(theme, config);
 	}
@@ -220,9 +231,21 @@ Ref<EditorTheme> EditorThemeManager::_create_base_theme(const Ref<EditorTheme> &
 
 	print_verbose("EditorTheme: Generating new styles.");
 
+	/*
 	if (is_default_style) {
 		ThemeModern::populate_standard_styles(theme, config);
 		ThemeModern::populate_editor_styles(theme, config);
+	} else {
+		ThemeClassic::populate_standard_styles(theme, config);
+		ThemeClassic::populate_editor_styles(theme, config);
+	}
+	*/
+	if (config.style == "Modern") {
+		ThemeModern::populate_standard_styles(theme, config);
+		ThemeModern::populate_editor_styles(theme, config);
+	} else if (config.style == "ImGui") {
+		ThemeImGui::populate_standard_styles(theme, config);
+		ThemeImGui::populate_editor_styles(theme, config);
 	} else {
 		ThemeClassic::populate_standard_styles(theme, config);
 		ThemeClassic::populate_editor_styles(theme, config);
@@ -268,10 +291,15 @@ EditorThemeManager::ThemeConfiguration EditorThemeManager::_create_theme_config(
 	config.dragging_hover_wait_msec = (float)EDITOR_GET("interface/editor/dragging_hover_wait_seconds") * 1000;
 
 	// Handle theme style.
+
+
 	if (config.preset != "Custom") {
 		if (config.style == "Classic") {
 			config.draw_relationship_lines = RELATIONSHIP_ALL;
 			config.corner_radius = 3;
+		} else if (config.style == "ImGui") {
+			config.draw_relationship_lines = RELATIONSHIP_SELECTED_ONLY;
+			config.corner_radius = 2;  // ImGui uses minimal corner radius
 		} else { // Default
 			config.draw_relationship_lines = config.default_relationship_lines;
 			config.corner_radius = config.default_corner_radius;

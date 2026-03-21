@@ -1048,7 +1048,7 @@ void CodeTextEditor::_complete_request() {
 		} else if (e.insert_text.begins_with("#") || e.insert_text.begins_with("//")) {
 			font_color = completion_comment_color;
 		}
-		text_editor->add_code_completion_option((CodeEdit::CodeCompletionKind)e.kind, e.display, e.insert_text, font_color, _get_completion_icon(e), e.default_value, e.location);
+		text_editor->add_code_completion_option((CodeEdit::CodeCompletionKind)e.kind, e.display, e.insert_text, _get_completion_color(e,font_color), _get_completion_icon(e), e.default_value, e.location);
 	}
 	text_editor->update_code_completion_options(forced);
 }
@@ -1098,6 +1098,52 @@ Ref<Texture2D> CodeTextEditor::_get_completion_icon(const ScriptLanguage::CodeCo
 			break;
 	}
 	return tex;
+}
+
+Color CodeTextEditor::_get_completion_color(const ScriptLanguage::CodeCompletionOption &p_option, Color fallback) {
+	Color col=fallback;
+
+	switch (p_option.kind) {
+		case ScriptLanguage::CODE_COMPLETION_KIND_FUNCTION:
+			col = Color(0.4, 0.6, 1.0); // blue
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_VARIABLE:
+		case ScriptLanguage::CODE_COMPLETION_KIND_MEMBER:
+			col = Color(0.4, 1.0, 0.5); // green
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_SIGNAL:
+			col = Color(1.0, 0.3, 0.3); // red
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_CLASS:
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_ENUM:
+			col = Color(0.15, 0.6, 0.2);
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_CONSTANT:
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_NODE_PATH:
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_FILE_PATH:
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_PLAIN_TEXT:
+			break;
+		case ScriptLanguage::CODE_COMPLETION_KIND_MAX:
+			break;
+		default:
+			break;
+	}
+
+	return col;
+}
+
+Ref<Font> CodeTextEditor::_get_completion_font(const ScriptLanguage::CodeCompletionOption &p_option,Ref<Font> fallback) {
+	Ref<Font> font=fallback;
+	bool is_immediate = p_option.location < ScriptLanguage::LOCATION_PARENT_MASK;
+	if (is_immediate) {
+		font = get_theme_font(SNAME("bold"), SNAME("EditorFonts"));
+		// use bold_font when rendering this item
+	}
+	return font;
 }
 
 void CodeTextEditor::update_editor_settings() {

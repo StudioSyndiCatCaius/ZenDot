@@ -1,1 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path fill="#e0e0e0" d="M11 2a1 1 0 0 0-2 0v6H8V3a1 1 0 0 0-2 0v8.05l-2.5-1.8A1 1 0 0 0 1.875 11L6 15h6a2 2 0 0 0 2-2V4a1 1 0 0 0-2 0v4h-1z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   version="1.1"
+   id="svg2457"
+   sodipodi:docname="ToolPan.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2461" />
+  <sodipodi:namedview
+     id="namedview2459"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="51.8125"
+     inkscape:cx="8.0386007"
+     inkscape:cy="8.0096502"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2457" />
+  <path
+     fill="#e0e0e0"
+     d="M11 2a1 1 0 0 0-2 0v6H8V3a1 1 0 0 0-2 0v8.05l-2.5-1.8A1 1 0 0 0 1.875 11L6 15h6a2 2 0 0 0 2-2V4a1 1 0 0 0-2 0v4h-1z"
+     id="path2455"
+     style="fill:#ffe374;fill-opacity:1" />
+</svg>
