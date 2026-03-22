@@ -20,6 +20,7 @@ public:
 	static String GetDir_Game();
 	static String GetDir_Mods();
 	static String GetDir_Config();
+	static String GetDir_Saves();
 };
 
 #endif // Z_FILE_H

@@ -81,20 +81,26 @@ void initialize_ZenCore_module(ModuleInitializationLevel p_level) {
 
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE) {
 		GDREGISTER_CLASS(Z);  // use this macro, not ClassDB::register_class
-
+		print_line("Z: BEGIN");
 		// Create and register the singleton
 		z_game_singleton = memnew(Z);
+
 		Engine::get_singleton()->add_singleton(
-			Engine::Singleton("Z", Z::get_singleton())
+			Engine::Singleton("Z", z_game_singleton)
 		);
+
+		// Queue adding to tree for when it exists
+		MessageQueue::get_singleton()->push_callable(callable_mp(z_game_singleton, &Z::_enter_tree_deferred));
 	}
 }
 
 void uninitialize_ZenCore_module(ModuleInitializationLevel p_level) {
+	print_line("Z: END");
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE) {
 		if (z_game_singleton) {
-			memdelete(z_game_singleton);
-			z_game_singleton = nullptr;
+			//z_game_singleton->shutdown();
+			//memdelete(z_game_singleton);
+			//z_game_singleton = nullptr;
 		}
 	}
 }

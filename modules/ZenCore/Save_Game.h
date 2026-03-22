@@ -6,6 +6,9 @@
 class ZSave_Game : public ZSave_Base {
 	GDCLASS(ZSave_Game, ZSave_Base);
 
+public:
+	String current_level;
+	Transform3D player_transform;
 };
 
 

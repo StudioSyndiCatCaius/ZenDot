@@ -1,4 +1,5 @@
 #include "z_file.h"
+#include "core/config/project_settings.h"
 #include "core/io/dir_access.h"
 #include "core/io/file_access.h"
 #include "core/os/os.h"
@@ -11,6 +12,7 @@ void Z_File::_bind_methods() {
 	ClassDB::bind_static_method("Z_File",D_METHOD("GetDir_Game"),&Z_File::GetDir_Game);
 	ClassDB::bind_static_method("Z_File",D_METHOD("GetDir_Mods"),&Z_File::GetDir_Mods);
 	ClassDB::bind_static_method("Z_File",D_METHOD("GetDir_Config"),&Z_File::GetDir_Config);
+	ClassDB::bind_static_method("Z_File",D_METHOD("GetDir_Saves"),&Z_File::GetDir_Saves);
 }
 
 TypedArray<String> Z_File::ListFilesInDir(const String &p_path, bool p_prepend_path, bool p_recursive) {
@@ -106,4 +108,8 @@ String Z_File::GetDir_Mods()
 
 String Z_File::GetDir_Config() {
 	return GetDir_Game()+"Config/";
+}
+
+String Z_File::GetDir_Saves() {
+	return ProjectSettings::get_singleton()->globalize_path("user://saves/");
 }
