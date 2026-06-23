@@ -16,7 +16,15 @@
 #include "Save_Base.h"
 #include "Save_Game.h"
 #include "Save_Global.h"
+#include "1D/Z1D_CharacterMovement.h"
+#include "1D/Z1D_DriveReader.h"
 #include "1D/Z1D_Input.h"
+#include "1D/Z1D_MouseListener.h"
+#include "1D/Z1D_PropertyEdit.h"
+#include "1D/Z1D_WorldEditor.h"
+#include "3D/Z3D_Gizmo.h"
+#include "G/Z_3D.h"
+#include "G/Z_Import.h"
 
 #include "G/Z_Lit.h"
 #include "UI/Zen_FileTree.h"
@@ -47,6 +55,9 @@ void initialize_ZenCore_module(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<Z_File>();
 	ClassDB::register_class<Z_OS>();
 	ClassDB::register_class<Z_Lit>();
+	ClassDB::register_class<Z_Import>();
+	ClassDB::register_class<Z_3D>();
+
 
 	//Resources
 	ClassDB::register_class<GameplayResource>();
@@ -70,9 +81,14 @@ void initialize_ZenCore_module(ModuleInitializationLevel p_level) {
 
 	//NODE 1D
 	ClassDB::register_class<Z1D_Input>();
+	ClassDB::register_class<Z1D_DriveReader>();
+	ClassDB::register_class<Z1D_PropertyEdit>();
+	ClassDB::register_class<Z1D_CharacterMovement>();
+	//ClassDB::register_class<Z1D_MouseListener>();
+	ClassDB::register_class<Z1D_WorldEditor>();
 
 	//NODE 3D
-	//ClassDB::register_class<ZenCharacter>();
+	ClassDB::register_class<Z3D_Gizmo>();
 
 	//NODE UI
 	ClassDB::register_class<Zen_FileTree>();

@@ -11,11 +11,17 @@ void Zen_InputAction::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_actions"),                    &Zen_InputAction::get_actions);
 	ClassDB::bind_method(D_METHOD("clear"),                          &Zen_InputAction::clear);
 
-	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "bindings"), "set_bindings", "get_bindings");
+	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "bindings", PROPERTY_HINT_DICTIONARY_TYPE,
+		vformat("%d:;%d:", Variant::STRING_NAME, Variant::VECTOR3)), "set_bindings", "get_bindings");
+}
+
+Zen_InputAction::Zen_InputAction() {
+	bindings.set_typed(Variant::STRING_NAME, StringName(), Variant(),
+	                   Variant::VECTOR3, StringName(), Variant());
 }
 
 void Zen_InputAction::set_bindings(const Dictionary &p_bindings) {
-	bindings = p_bindings;
+	bindings.assign(p_bindings);
 	emit_changed();
 }
 

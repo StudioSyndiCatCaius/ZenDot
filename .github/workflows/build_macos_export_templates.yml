@@ -1,0 +1,124 @@
+name: 🍎 Build macOS Export Templates
+
+on:
+  workflow_dispatch:
+
+env:
+  SCONS_FLAGS: >-
+    module_text_server_fb_enabled=yes
+    "accesskit_sdk_path=${{ github.workspace }}/accesskit-c-0.17.0/"
+
+jobs:
+  build-macos-templates:
+    runs-on: macos-latest
+    timeout-minutes: 300
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Select Xcode 16
+        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+
+      - name: Restore Godot build cache
+        uses: ./.github/actions/godot-cache-restore
+        with:
+          cache-name: macos-export-templates
+        continue-on-error: true
+
+      - name: Setup Python and SCons
+        uses: ./.github/actions/godot-deps
+
+      - name: Download pre-built AccessKit
+        uses: dsaltares/fetch-gh-release-asset@1.1.2
+        with:
+          repo: AccessKit/accesskit-c
+          version: tags/0.17.0
+          file: accesskit-c-0.17.0.zip
+          target: accesskit-c-0.17.0/accesskit_c.zip
+
+      - name: Extract pre-built AccessKit
+        run: unzip -o accesskit-c-0.17.0/accesskit_c.zip
+
+      - name: Setup Vulkan SDK
+        id: vulkan-sdk
+        run: |
+          if sh misc/scripts/install_vulkan_sdk_macos.sh; then
+            echo "VULKAN_ENABLED=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::macOS: Vulkan SDK installation failed, building without Vulkan support."
+            echo "VULKAN_ENABLED=no" >> "$GITHUB_OUTPUT"
+          fi
+        continue-on-error: true
+
+      - name: Build template_release (x86_64)
+        uses: ./.github/actions/godot-build
+        with:
+          platform: macos
+          target: template_release
+          scons-flags: ${{ env.SCONS_FLAGS }} arch=x86_64 debug_symbols=no vulkan=${{ steps.vulkan-sdk.outputs.VULKAN_ENABLED }}
+
+      - name: Build template_release (arm64)
+        uses: ./.github/actions/godot-build
+        with:
+          platform: macos
+          target: template_release
+          scons-flags: ${{ env.SCONS_FLAGS }} arch=arm64 debug_symbols=no vulkan=${{ steps.vulkan-sdk.outputs.VULKAN_ENABLED }}
+
+      - name: Build template_debug (x86_64)
+        uses: ./.github/actions/godot-build
+        with:
+          platform: macos
+          target: template_debug
+          scons-flags: ${{ env.SCONS_FLAGS }} arch=x86_64 vulkan=${{ steps.vulkan-sdk.outputs.VULKAN_ENABLED }}
+
+      - name: Build template_debug (arm64)
+        uses: ./.github/actions/godot-build
+        with:
+          platform: macos
+          target: template_debug
+          scons-flags: ${{ env.SCONS_FLAGS }} arch=arm64 vulkan=${{ steps.vulkan-sdk.outputs.VULKAN_ENABLED }}
+
+      - name: Save Godot build cache
+        uses: ./.github/actions/godot-cache-save
+        with:
+          cache-name: macos-export-templates
+        continue-on-error: true
+
+      - name: Package templates
+        run: |
+          mkdir -p export_templates
+
+          lipo -create bin/godot.macos.template_release.x86_64 bin/godot.macos.template_release.arm64 \
+               -output bin/godot.macos.template_release.universal
+          lipo -create bin/godot.macos.template_debug.x86_64 bin/godot.macos.template_debug.arm64 \
+               -output bin/godot.macos.template_debug.universal
+
+          strip bin/godot.macos.template_*.universal
+          chmod +x bin/godot.macos.template_*.universal
+
+          cp bin/godot.macos.template_release.universal export_templates/
+          cp bin/godot.macos.template_debug.universal export_templates/
+
+          python3 -c "
+          import version
+          print(f'{version.major}.{version.minor}.{version.patch}.{version.status}.custom_build')
+          " > export_templates/version.txt
+
+          echo "Version: $(cat export_templates/version.txt)"
+
+          cd export_templates
+          zip ../macos_templates.zip \
+            godot.macos.template_release.universal \
+            godot.macos.template_debug.universal \
+            version.txt
+          mv ../macos_templates.zip ../macos_templates.tpz
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-export-templates
+          path: macos_templates.tpz
+          retention-days: 60

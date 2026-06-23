@@ -390,3 +390,7 @@ $RECYCLE.BIN/
 *.msp
 *.lnk
 *.generated.props
+
+# Local batch credentials and machine-specific config — never commit
+_Batch/CLI_Login.ini
+_Batch/osxcross_config.json

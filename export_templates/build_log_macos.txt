@@ -1,0 +1,37 @@
+Build started: Thu 06/11/2026 16:34:13.46 
+Version: 4.6.stable.custom_build 
+ 
+[1/4] Building RELEASE template (arm64)... 
+scons: Entering directory `D:\Github\ZenDot_Engine\ZenDot'
+scons: Reading SConscript files ...
+ERROR: Invalid target platform "macos".
+The following platforms are available:
+	windows
+Please run SCons again and select a valid platform: platform=<string>.
+[OK] Release arm64 build complete 
+[1b/4] Building RELEASE template (x86_64)... 
+scons: Entering directory `D:\Github\ZenDot_Engine\ZenDot'
+scons: Reading SConscript files ...
+ERROR: Invalid target platform "macos".
+The following platforms are available:
+	windows
+Please run SCons again and select a valid platform: platform=<string>.
+[OK] Release x86_64 build complete 
+[2/4] Building DEBUG template (arm64)... 
+scons: Entering directory `D:\Github\ZenDot_Engine\ZenDot'
+scons: Reading SConscript files ...
+ERROR: Invalid target platform "macos".
+The following platforms are available:
+	windows
+Please run SCons again and select a valid platform: platform=<string>.
+[OK] Debug arm64 build complete 
+[2b/4] Building DEBUG template (x86_64)... 
+scons: Entering directory `D:\Github\ZenDot_Engine\ZenDot'
+scons: Reading SConscript files ...
+ERROR: Invalid target platform "macos".
+The following platforms are available:
+	windows
+Please run SCons again and select a valid platform: platform=<string>.
+[OK] Debug x86_64 build complete 
+[3/4] Collecting binaries... 
+[ERROR] Binary not found: "D:\Github\ZenDot_Engine\ZenDot\bin\godot.macos.template_release.arm64" 

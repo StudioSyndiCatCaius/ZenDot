@@ -264,7 +264,7 @@ void ThemeModern::populate_shared_styles(const Ref<EditorTheme> &p_theme, Editor
 	// Styleboxes.
 	{
 		// This is the basic stylebox, used as a base for most other styleboxes (through `duplicate()`).
-		p_config.base_style = EditorThemeManager::make_flat_stylebox(p_config.base_color, p_config.increased_margin * 1.5, p_config.increased_margin * 1.5, p_config.increased_margin * 1.5, p_config.increased_margin * 1.5, p_config.corner_radius);
+		p_config.base_style = EditorThemeManager::make_flat_stylebox(p_config.base_color, p_config.increased_margin * 1.25, p_config.increased_margin * 1.25, p_config.increased_margin * 1.25, p_config.increased_margin * 1.25, p_config.corner_radius);
 
 		p_config.focus_style = p_config.base_style->duplicate();
 		p_config.focus_style->set_draw_center(false);
@@ -276,14 +276,14 @@ void ThemeModern::populate_shared_styles(const Ref<EditorTheme> &p_theme, Editor
 		p_config.base_empty_wide_style = EditorThemeManager::make_empty_stylebox();
 		// Ensure minimum margin for wide flat buttons otherwise the topbar looks broken.
 		float base_empty_wide_margin = MAX(p_config.base_margin, 3.0);
-		p_config.base_empty_wide_style->set_content_margin_individual(base_empty_wide_margin * 1.5 * EDSCALE, base_empty_wide_margin * EDSCALE, base_empty_wide_margin * 1.5 * EDSCALE, base_empty_wide_margin * EDSCALE);
+		p_config.base_empty_wide_style->set_content_margin_individual(base_empty_wide_margin * 1.25 * EDSCALE, base_empty_wide_margin * 0.85 * EDSCALE, base_empty_wide_margin * 1.25 * EDSCALE, base_empty_wide_margin * 0.85 * EDSCALE);
 
 		// Button styles.
 		{
-			p_config.widget_margin = Vector2(p_config.increased_margin + 2, p_config.increased_margin + 1) * EDSCALE;
+			p_config.widget_margin = Vector2(p_config.increased_margin + 1, p_config.increased_margin) * EDSCALE;
 
 			p_config.button_style = p_config.base_style->duplicate();
-			p_config.button_style->set_content_margin_individual(p_config.base_margin * 2 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 2 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE);
+			p_config.button_style->set_content_margin_individual(p_config.base_margin * 1.6 * EDSCALE, p_config.base_margin * 1.2 * EDSCALE, p_config.base_margin * 1.6 * EDSCALE, p_config.base_margin * 1.2 * EDSCALE);
 			p_config.button_style->set_bg_color(p_config.button_normal_color);
 			p_config.button_style->set_border_width_all(Math::round(EDSCALE));
 			p_config.button_style->set_shadow_color(p_config.dark_theme ? Color(0, 0, 0, 0.005) : Color(1, 1, 1, 0.005));
@@ -322,7 +322,7 @@ void ThemeModern::populate_shared_styles(const Ref<EditorTheme> &p_theme, Editor
 			p_config.flat_button_hover = p_config.base_style->duplicate();
 			p_config.flat_button_hover->set_bg_color(p_config.flat_button_hover_color);
 			// This affects buttons in Tree so top and bottom margins should be kept low.
-			p_config.flat_button_hover->set_content_margin_individual(p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 0.9 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 0.9 * EDSCALE);
+			p_config.flat_button_hover->set_content_margin_individual(p_config.base_margin * 1.25 * EDSCALE, p_config.base_margin * 0.7 * EDSCALE, p_config.base_margin * 1.25 * EDSCALE, p_config.base_margin * 0.7 * EDSCALE);
 			if (p_config.draw_extra_borders) {
 				p_config.button_style_hover->set_border_color(p_config.extra_border_color_1);
 			}
@@ -393,8 +393,12 @@ void ThemeModern::populate_shared_styles(const Ref<EditorTheme> &p_theme, Editor
 			p_config.content_panel_style->set_content_margin_individual(content_panel_margin, 2 * EDSCALE + content_panel_margin, content_panel_margin, content_panel_margin);
 
 			p_config.tab_container_style = p_config.base_style->duplicate();
-			p_config.tab_container_style->set_content_margin_all(p_config.increased_margin * 1.5 * EDSCALE);
+			p_config.tab_container_style->set_content_margin_all(p_config.increased_margin * 1.25 * EDSCALE);
 			p_config.tab_container_style->set_corner_radius_individual(0, 0, p_config.corner_radius * EDSCALE, p_config.corner_radius * EDSCALE);
+			// Add subtle drop shadow to tab container panel.
+			p_config.tab_container_style->set_shadow_color(p_config.shadow_color * Color(1, 1, 1, 0.5));
+			p_config.tab_container_style->set_shadow_size(4 * EDSCALE);
+			p_config.tab_container_style->set_shadow_offset(Vector2(0, -1) * EDSCALE);
 
 			p_config.foreground_panel = p_config.tab_container_style->duplicate();
 			p_config.foreground_panel->set_corner_radius(CORNER_TOP_LEFT, p_config.tab_container_style->get_corner_radius(CORNER_BOTTOM_LEFT));
@@ -510,6 +514,7 @@ void ThemeModern::populate_standard_styles(const Ref<EditorTheme> &p_theme, Edit
 		p_theme->set_color("font_disabled_color", "MenuBar", p_config.font_disabled_color);
 		p_theme->set_color("font_outline_color", "MenuBar", p_config.font_outline_color);
 
+		p_theme->set_constant("font_size", "MenuBar", 14);
 		p_theme->set_constant("h_separation", "MenuBar", 4 * EDSCALE);
 		p_theme->set_constant("outline_size", "MenuBar", 0);
 
@@ -551,7 +556,7 @@ void ThemeModern::populate_standard_styles(const Ref<EditorTheme> &p_theme, Edit
 		// CheckBox.
 		{
 			Ref<StyleBoxFlat> checkbox_style = p_config.panel_container_style->duplicate();
-			checkbox_style->set_content_margin_individual(p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 0.75 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 0.75 * EDSCALE);
+			checkbox_style->set_content_margin_individual(p_config.base_margin * 1.25 * EDSCALE, p_config.base_margin * 0.6 * EDSCALE, p_config.base_margin * 1.25 * EDSCALE, p_config.base_margin * 0.6 * EDSCALE);
 			Ref<StyleBoxFlat> checkbox_style_normal = checkbox_style->duplicate();
 			checkbox_style_normal->set_draw_center(false);
 
@@ -603,7 +608,7 @@ void ThemeModern::populate_standard_styles(const Ref<EditorTheme> &p_theme, Edit
 		{
 			// Use empty stylebox for trees to avoid drawing unnecessary borders in docks.
 			Ref<StyleBoxEmpty> style_tree_panel = p_config.base_empty_style->duplicate();
-			style_tree_panel->set_content_margin_individual(p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 2.5 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 2.5 * EDSCALE);
+			style_tree_panel->set_content_margin_individual(p_config.base_margin * 1.25 * EDSCALE, p_config.base_margin * 2.0 * EDSCALE, p_config.base_margin * 1.25 * EDSCALE, p_config.base_margin * 2.0 * EDSCALE);
 
 			Ref<StyleBoxFlat> style_button_pressed = p_config.flat_button_pressed->duplicate();
 			style_button_pressed->set_content_margin_individual(p_config.base_margin, 0, p_config.base_margin, 0);
@@ -642,13 +647,13 @@ void ThemeModern::populate_standard_styles(const Ref<EditorTheme> &p_theme, Edit
 			p_theme->set_constant("h_separation", "Tree", (p_config.increased_margin + 2) * EDSCALE);
 			p_theme->set_constant("guide_width", "Tree", p_config.border_width);
 			p_theme->set_constant("item_margin", "Tree", MAX(3 * p_config.increased_margin * EDSCALE, 12 * EDSCALE));
-			p_theme->set_constant("inner_item_margin_top", "Tree", p_config.base_margin * 0.75 * EDSCALE);
-			p_theme->set_constant("inner_item_margin_bottom", "Tree", p_config.base_margin * 0.75 * EDSCALE);
-			p_theme->set_constant("inner_item_margin_left", "Tree", p_config.base_margin * EDSCALE);
-			p_theme->set_constant("inner_item_margin_right", "Tree", p_config.base_margin * EDSCALE);
-			p_theme->set_constant("check_h_separation", "Tree", p_config.base_margin * 1.5 * EDSCALE);
-			p_theme->set_constant("icon_h_separation", "Tree", p_config.base_margin * 1.5 * EDSCALE);
-			p_theme->set_constant("button_margin", "Tree", p_config.base_margin * EDSCALE);
+			p_theme->set_constant("inner_item_margin_top", "Tree", p_config.base_margin * 0.6 * EDSCALE);
+			p_theme->set_constant("inner_item_margin_bottom", "Tree", p_config.base_margin * 0.6 * EDSCALE);
+			p_theme->set_constant("inner_item_margin_left", "Tree", p_config.base_margin * 0.85 * EDSCALE);
+			p_theme->set_constant("inner_item_margin_right", "Tree", p_config.base_margin * 0.85 * EDSCALE);
+			p_theme->set_constant("check_h_separation", "Tree", p_config.base_margin * 1.25 * EDSCALE);
+			p_theme->set_constant("icon_h_separation", "Tree", p_config.base_margin * 1.25 * EDSCALE);
+			p_theme->set_constant("button_margin", "Tree", p_config.base_margin * 0.85 * EDSCALE);
 			p_theme->set_constant("dragging_unfold_wait_msec", "Tree", p_config.dragging_hover_wait_msec);
 			p_theme->set_constant("scroll_border", "Tree", 40 * EDSCALE);
 			p_theme->set_constant("scroll_speed", "Tree", 12);
@@ -748,7 +753,7 @@ void ThemeModern::populate_standard_styles(const Ref<EditorTheme> &p_theme, Edit
 		// ItemList.
 		{
 			Ref<StyleBoxFlat> style_itemlist_bg = p_config.base_style->duplicate();
-			style_itemlist_bg->set_content_margin_all(p_config.base_margin * 2 * EDSCALE);
+			style_itemlist_bg->set_content_margin_all(p_config.base_margin * 1.6 * EDSCALE);
 			Ref<StyleBoxFlat> style_itemlist_cursor = p_config.base_style->duplicate();
 			style_itemlist_cursor->set_bg_color(p_config.mono_color * Color(1, 1, 1, 0.04));
 
@@ -768,9 +773,9 @@ void ThemeModern::populate_standard_styles(const Ref<EditorTheme> &p_theme, Edit
 			p_theme->set_color("font_outline_color", "ItemList", p_config.font_outline_color);
 			p_theme->set_color("guide_color", "ItemList", Color(1, 1, 1, 0));
 			p_theme->set_color("scroll_hint_color", "ItemList", Color(0, 0, 0, p_config.dark_theme ? 1.0 : 0.5));
-			p_theme->set_constant("v_separation", "ItemList", p_config.base_margin * 1.5 * EDSCALE);
-			p_theme->set_constant("h_separation", "ItemList", (p_config.increased_margin + 2) * EDSCALE);
-			p_theme->set_constant("icon_margin", "ItemList", (p_config.increased_margin + 2) * EDSCALE);
+			p_theme->set_constant("v_separation", "ItemList", p_config.base_margin * 1.2 * EDSCALE);
+			p_theme->set_constant("h_separation", "ItemList", (p_config.increased_margin + 1) * EDSCALE);
+			p_theme->set_constant("icon_margin", "ItemList", (p_config.increased_margin + 1) * EDSCALE);
 			p_theme->set_constant(SceneStringName(line_separation), "ItemList", p_config.separation_margin);
 			p_theme->set_constant("outline_size", "ItemList", 0);
 		}
@@ -779,8 +784,17 @@ void ThemeModern::populate_standard_styles(const Ref<EditorTheme> &p_theme, Edit
 	// TabBar & TabContainer.
 	{
 		Ref<StyleBoxFlat> style_tab_selected = p_config.base_style->duplicate();
-		style_tab_selected->set_content_margin_individual(p_config.base_margin * 4 * EDSCALE, p_config.base_margin * 2.1 * EDSCALE, p_config.base_margin * 4 * EDSCALE, p_config.base_margin * 2.1 * EDSCALE);
+		style_tab_selected->set_content_margin_individual(p_config.base_margin * 3.2 * EDSCALE, p_config.base_margin * 1.7 * EDSCALE, p_config.base_margin * 3.2 * EDSCALE, p_config.base_margin * 1.7 * EDSCALE);
 		style_tab_selected->set_corner_radius_individual(p_config.corner_radius * EDSCALE, p_config.corner_radius * EDSCALE, 0, 0);
+		// Add slight drop shadow to selected tabs (offset upward to avoid bottom edge).
+		style_tab_selected->set_shadow_color(p_config.shadow_color * Color(1, 1, 1, 0.6));
+		style_tab_selected->set_shadow_size(3 * EDSCALE);
+		style_tab_selected->set_shadow_offset(Vector2(0, -1) * EDSCALE);
+		// Add pinkish-red top border rim.
+		style_tab_selected->set_border_width(SIDE_TOP, 2 * EDSCALE);
+		//style_tab_selected->set_border_width(SIDE_LEFT, 1 * EDSCALE);
+		//style_tab_selected->set_border_width(SIDE_RIGHT, 1 * EDSCALE);
+		style_tab_selected->set_border_color(Color(0.85, 0.35, 0.45));
 
 		Ref<StyleBoxFlat> style_tab_focus = style_tab_selected->duplicate();
 		style_tab_focus->set_bg_color(p_config.base_color);
@@ -789,9 +803,18 @@ void ThemeModern::populate_standard_styles(const Ref<EditorTheme> &p_theme, Edit
 		Ref<StyleBoxFlat> style_tab_unselected = style_tab_selected->duplicate();
 		style_tab_unselected->set_bg_color(p_config.surface_lowest_color);
 		style_tab_unselected->set_border_width_all(0);
+		// Remove shadow from unselected tabs.
+		style_tab_unselected->set_shadow_size(0);
 
 		Ref<StyleBoxFlat> style_tab_hovered = style_tab_unselected->duplicate();
 		style_tab_hovered->set_bg_color(p_config.surface_base_color * Color(1, 1, 1, 0.6));
+		// Add subtle shadow on hover.
+		style_tab_hovered->set_shadow_color(p_config.shadow_color * Color(1, 1, 1, 0.3));
+		style_tab_hovered->set_shadow_size(2 * EDSCALE);
+		style_tab_hovered->set_shadow_offset(Vector2(0, -1) * EDSCALE);
+		// Add subtle pinkish-red top border on hover.
+		style_tab_hovered->set_border_width(SIDE_TOP, 2 * EDSCALE);
+		style_tab_hovered->set_border_color(Color(0.85, 0.35, 0.45, 0.5));
 
 		Color drop_mark_color = p_config.dark_color_2.lerp(p_config.accent_color, 0.75);
 
@@ -2096,7 +2119,7 @@ void ThemeModern::populate_editor_styles(const Ref<EditorTheme> &p_theme, Editor
 			p_theme->set_type_variation("PanelContainerTabbarInner", "PanelContainer");
 
 			Ref<StyleBoxFlat> style_tab_selected_inner = p_theme->get_stylebox(SNAME("tab_selected"), SNAME("TabContainer"))->duplicate();
-			style_tab_selected_inner->set_content_margin_individual(p_config.base_margin * 4 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 4 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE);
+			style_tab_selected_inner->set_content_margin_individual(p_config.base_margin * 3.2 * EDSCALE, p_config.base_margin * 1.2 * EDSCALE, p_config.base_margin * 3.2 * EDSCALE, p_config.base_margin * 1.2 * EDSCALE);
 			style_tab_selected_inner->set_corner_radius_all(p_config.corner_radius * EDSCALE);
 			p_theme->set_stylebox("tab_selected", "TabContainerInner", style_tab_selected_inner);
 			p_theme->set_stylebox("tab_selected", "TabBarInner", style_tab_selected_inner);
@@ -2207,19 +2230,19 @@ void ThemeModern::populate_editor_styles(const Ref<EditorTheme> &p_theme, Editor
 			p_theme->set_type_variation("TreeTable", "Tree");
 
 			p_theme->set_constant("h_separation", "TreeTable", 0);
-			p_theme->set_constant("inner_item_margin_top", "TreeTable", p_config.base_margin * EDSCALE);
-			p_theme->set_constant("inner_item_margin_bottom", "TreeTable", p_config.base_margin * EDSCALE);
-			p_theme->set_constant("inner_item_margin_left", "TreeTable", p_config.base_margin * 3 * EDSCALE);
-			p_theme->set_constant("inner_item_margin_right", "TreeTable", p_config.base_margin * 3 * EDSCALE);
-			p_theme->set_constant("item_margin", "TreeTable", 16 * EDSCALE);
+			p_theme->set_constant("inner_item_margin_top", "TreeTable", p_config.base_margin * 0.85 * EDSCALE);
+			p_theme->set_constant("inner_item_margin_bottom", "TreeTable", p_config.base_margin * 0.85 * EDSCALE);
+			p_theme->set_constant("inner_item_margin_left", "TreeTable", p_config.base_margin * 2.5 * EDSCALE);
+			p_theme->set_constant("inner_item_margin_right", "TreeTable", p_config.base_margin * 2.5 * EDSCALE);
+			p_theme->set_constant("item_margin", "TreeTable", 14 * EDSCALE);
 			p_theme->set_constant("button_margin", "TreeTable", 0);
 
 			Ref<StyleBoxEmpty> style_tree_panel = p_config.base_empty_style->duplicate();
-			style_tree_panel->set_content_margin_individual(p_config.base_margin * 2 * EDSCALE, p_config.base_margin * 0.75 * EDSCALE, p_config.base_margin * 2 * EDSCALE, p_config.base_margin * 0.75 * EDSCALE);
+			style_tree_panel->set_content_margin_individual(p_config.base_margin * 1.6 * EDSCALE, p_config.base_margin * 0.6 * EDSCALE, p_config.base_margin * 1.6 * EDSCALE, p_config.base_margin * 0.6 * EDSCALE);
 			p_theme->set_stylebox(SceneStringName(panel), "TreeTable", style_tree_panel);
 
 			const Ref<StyleBoxFlat> style_tree_title = p_theme->get_stylebox("title_button_normal", "Tree")->duplicate();
-			style_tree_title->set_content_margin_individual(p_config.base_margin * 3 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE, p_config.base_margin * 3 * EDSCALE, p_config.base_margin * 1.5 * EDSCALE);
+			style_tree_title->set_content_margin_individual(p_config.base_margin * 2.5 * EDSCALE, p_config.base_margin * 1.2 * EDSCALE, p_config.base_margin * 2.5 * EDSCALE, p_config.base_margin * 1.2 * EDSCALE);
 			p_theme->set_stylebox("title_button_normal", "TreeTable", style_tree_title);
 			p_theme->set_stylebox("title_button_hover", "TreeTable", style_tree_title);
 			p_theme->set_stylebox("title_button_pressed", "TreeTable", style_tree_title);
@@ -2380,7 +2403,7 @@ void ThemeModern::populate_editor_styles(const Ref<EditorTheme> &p_theme, Editor
 		// EditorInspectorArray.
 		p_theme->set_color("bg", "EditorInspectorArray", p_config.surface_base_color);
 
-		p_theme->set_constant("inspector_margin", EditorStringName(Editor), 12 * EDSCALE);
+		p_theme->set_constant("inspector_margin", EditorStringName(Editor), 10 * EDSCALE);
 
 		// Colored EditorProperty.
 		for (int i = 0; i < 16; i++) {

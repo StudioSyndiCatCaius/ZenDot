@@ -21,6 +21,7 @@ protected:
 	static void _bind_methods();
 
 public:
+	Zen_InputAction();
 	void set_bindings(const Dictionary &p_bindings);
 	Dictionary get_bindings() const;
 
