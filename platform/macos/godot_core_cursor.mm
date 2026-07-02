@@ -1,5 +1,9 @@
 /**************************************************************************/
+<<<<<<<< HEAD:platform/android/java/app/src/instrumented/java/com/godot/game/test/javaclasswrapper/TestClass2.kt
+/*  TestClass2.kt                                                         */
+========
 /*  godot_core_cursor.mm                                                  */
+>>>>>>>> upstream/master:platform/macos/godot_core_cursor.mm
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,6 +32,18 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+<<<<<<<< HEAD:platform/android/java/app/src/instrumented/java/com/godot/game/test/javaclasswrapper/TestClass2.kt
+package com.godot.game.test.javaclasswrapper
+
+class TestClass2(private val value: Int) {
+    fun getValue(): Int {
+        return value
+    }
+    override fun toString(): String {
+        return value.toString()
+    }
+}
+========
 #import "godot_core_cursor.h"
 
 @implementation GodotCoreCursor
@@ -41,3 +57,4 @@
 }
 
 @end
+>>>>>>>> upstream/master:platform/macos/godot_core_cursor.mm

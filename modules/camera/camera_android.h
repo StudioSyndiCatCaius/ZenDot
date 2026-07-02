@@ -53,6 +53,19 @@ struct CameraRotationParams {
 	int display_rotation;
 };
 
+#include <optional>
+
+enum class CameraFacing {
+	BACK = 0,
+	FRONT = 1,
+};
+
+struct CameraRotationParams {
+	int sensor_orientation;
+	CameraFacing camera_facing;
+	int display_rotation;
+};
+
 class CameraFeedAndroid : public CameraFeed {
 	GDSOFTCLASS(CameraFeedAndroid, CameraFeed);
 

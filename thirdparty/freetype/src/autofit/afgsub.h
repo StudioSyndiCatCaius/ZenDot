@@ -4,7 +4,11 @@
  *
  *   Auto-fitter routines to parse the GSUB table (header).
  *
- * Copyright (C) 2025 by
+<<<<<<<< HEAD:thirdparty/freetype/src/autofit/afblue.cin
+ * Copyright (C) 2013-2025 by
+========
+ * Copyright (C) 2025-2026 by
+>>>>>>>> upstream/master:thirdparty/freetype/src/autofit/afgsub.h
  * David Turner, Robert Wilhelm, and Werner Lemberg.
  *
  * This file is part of the FreeType project, and may only be used,

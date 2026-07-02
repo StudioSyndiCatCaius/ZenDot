@@ -1,5 +1,9 @@
 /**************************************************************************/
+<<<<<<<< HEAD:scene/3d/ccd_ik_3d.h
+/*  ccd_ik_3d.h                                                           */
+========
 /*  line_edit.compat.inc                                                  */
+>>>>>>>> upstream/master:scene/gui/line_edit.compat.inc
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,7 +32,23 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+<<<<<<<< HEAD:scene/3d/ccd_ik_3d.h
+#pragma once
+
+#include "scene/3d/iterate_ik_3d.h"
+
+class CCDIK3D : public IterateIK3D {
+	GDCLASS(CCDIK3D, IterateIK3D);
+
+protected:
+	virtual void _solve_iteration(double p_delta, Skeleton3D *p_skeleton, IterateIK3DSetting *p_setting, const Vector3 &p_destination) override;
+};
+========
 #ifndef DISABLE_DEPRECATED
+
+#include "line_edit.h"
+
+#include "core/object/class_db.h"
 
 void LineEdit::_edit_bind_compat_111117() {
 	edit(false);
@@ -39,3 +59,4 @@ void LineEdit::_bind_compatibility_methods() {
 }
 
 #endif // DISABLE_DEPRECATED
+>>>>>>>> upstream/master:scene/gui/line_edit.compat.inc

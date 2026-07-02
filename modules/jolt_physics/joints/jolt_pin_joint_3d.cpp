@@ -34,7 +34,7 @@
 #include "../objects/jolt_body_3d.h"
 #include "../spaces/jolt_space_3d.h"
 
-#include "Jolt/Physics/Constraints/PointConstraint.h"
+#include <Jolt/Physics/Constraints/PointConstraint.h>
 
 namespace {
 
@@ -155,6 +155,5 @@ void JoltPinJoint3D::rebuild() {
 
 	space->add_joint(this);
 
-	_update_enabled();
-	_update_iterations();
+	_update_joint();
 }

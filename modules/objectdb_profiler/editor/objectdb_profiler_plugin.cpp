@@ -1,5 +1,9 @@
 /**************************************************************************/
+<<<<<<<< HEAD:platform/macos/libgodot_macos.mm
+/*  libgodot_macos.mm                                                     */
+========
 /*  objectdb_profiler_plugin.cpp                                          */
+>>>>>>>> upstream/master:modules/objectdb_profiler/editor/objectdb_profiler_plugin.cpp
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,9 +32,34 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+<<<<<<<< HEAD:platform/macos/libgodot_macos.mm
+#include "core/extension/libgodot.h"
+
+#include "core/extension/godot_instance.h"
+#include "main/main.h"
+
+#include "os_macos.h"
+
+static OS_MacOS *os = nullptr;
+
+static GodotInstance *instance = nullptr;
+
+GDExtensionObjectPtr libgodot_create_godot_instance(int p_argc, char *p_argv[], GDExtensionInitializationFunction p_init_func) {
+	ERR_FAIL_COND_V_MSG(instance != nullptr, nullptr, "Only one Godot Instance may be created.");
+
+	uint32_t remaining_args = p_argc - 1;
+	os = new OS_MacOS_NSApp(p_argv[0], remaining_args, remaining_args > 0 ? &p_argv[1] : nullptr);
+
+	@autoreleasepool {
+		Error err = Main::setup(p_argv[0], remaining_args, remaining_args > 0 ? &p_argv[1] : nullptr, false);
+		if (err != OK) {
+			return nullptr;
+========
 #include "objectdb_profiler_plugin.h"
 
 #include "objectdb_profiler_panel.h"
+
+#include "core/object/callable_mp.h"
 
 bool ObjectDBProfilerDebuggerPlugin::has_capture(const String &p_capture) const {
 	return p_capture == "snapshot";
@@ -61,6 +90,30 @@ void ObjectDBProfilerPlugin::_notification(int p_what) {
 		} break;
 		case Node::NOTIFICATION_EXIT_TREE: {
 			remove_debugger_plugin(debugger);
+>>>>>>>> upstream/master:modules/objectdb_profiler/editor/objectdb_profiler_plugin.cpp
 		}
+
+		instance = memnew(GodotInstance);
+		if (!instance->initialize(p_init_func)) {
+			memdelete(instance);
+			instance = nullptr;
+			return nullptr;
+		}
+
+		return (GDExtensionObjectPtr)instance;
 	}
 }
+<<<<<<<< HEAD:platform/macos/libgodot_macos.mm
+
+void libgodot_destroy_godot_instance(GDExtensionObjectPtr p_godot_instance) {
+	GodotInstance *godot_instance = (GodotInstance *)p_godot_instance;
+	if (instance == godot_instance) {
+		godot_instance->stop();
+		memdelete(godot_instance);
+		// Note: When Godot Engine supports reinitialization, clear the instance pointer here.
+		//instance = nullptr;
+		Main::cleanup();
+	}
+}
+========
+>>>>>>>> upstream/master:modules/objectdb_profiler/editor/objectdb_profiler_plugin.cpp

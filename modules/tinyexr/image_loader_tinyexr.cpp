@@ -30,9 +30,11 @@
 
 #include "image_loader_tinyexr.h"
 
-#include <zlib.h> // Should come before including tinyexr.
+#include "core/io/file_access_memory.h"
 
-#include "thirdparty/tinyexr/tinyexr.h"
+#include <zlib.h>
+// zlib should come before including tinyexr.
+#include <thirdparty/tinyexr/tinyexr.h>
 
 #include "core/io/file_access_memory.h"
 

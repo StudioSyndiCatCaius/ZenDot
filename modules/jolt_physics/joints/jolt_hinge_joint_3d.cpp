@@ -36,8 +36,8 @@
 
 #include "core/config/engine.h"
 
-#include "Jolt/Physics/Constraints/FixedConstraint.h"
-#include "Jolt/Physics/Constraints/HingeConstraint.h"
+#include <Jolt/Physics/Constraints/FixedConstraint.h>
+#include <Jolt/Physics/Constraints/HingeConstraint.h>
 
 namespace {
 
@@ -412,8 +412,8 @@ void JoltHingeJoint3D::rebuild() {
 
 	space->add_joint(this);
 
-	_update_enabled();
-	_update_iterations();
+	_update_joint();
+
 	_update_motor_state();
 	_update_motor_velocity();
 	_update_motor_limit();

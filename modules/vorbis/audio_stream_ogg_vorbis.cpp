@@ -33,6 +33,10 @@
 
 #include "core/templates/rb_map.h"
 
+#include "core/io/file_access.h"
+#include "core/object/class_db.h"
+#include "core/templates/rb_map.h"
+
 #include <ogg/ogg.h>
 
 int AudioStreamPlaybackOggVorbis::_mix_internal(AudioFrame *p_buffer, int p_frames) {
@@ -427,10 +431,6 @@ Ref<AudioStreamPlayback> AudioStreamOggVorbis::instantiate_playback() {
 	return nullptr;
 }
 
-String AudioStreamOggVorbis::get_stream_name() const {
-	return ""; //return stream_name;
-}
-
 void AudioStreamOggVorbis::maybe_update_info() {
 	ERR_FAIL_COND(packet_sequence.is_null());
 
@@ -736,7 +736,3 @@ void AudioStreamOggVorbis::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "loop"), "set_loop", "has_loop");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "loop_offset"), "set_loop_offset", "get_loop_offset");
 }
-
-AudioStreamOggVorbis::AudioStreamOggVorbis() {}
-
-AudioStreamOggVorbis::~AudioStreamOggVorbis() {}

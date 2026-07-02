@@ -30,15 +30,15 @@
 
 #pragma once
 
-#include "scene/gui/margin_container.h"
-#include "tile_atlas_view.h"
-
+#include "core/math/random_pcg.h"
 #include "core/os/thread.h"
 #include "editor/docks/editor_dock.h"
+#include "editor/scene/2d/tiles/tile_atlas_view.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/check_box.h"
 #include "scene/gui/flow_container.h"
 #include "scene/gui/item_list.h"
+#include "scene/gui/margin_container.h"
 #include "scene/gui/menu_button.h"
 #include "scene/gui/option_button.h"
 #include "scene/gui/separator.h"
@@ -88,7 +88,7 @@ public:
 	virtual void tile_set_changed() {}
 	virtual void edit(ObjectID p_tile_map_layer_id) {}
 	virtual void draw_tile_coords_over_viewport(Control *p_overlay, const TileMapLayer *p_edited_layer, Ref<TileSet> p_tile_set, bool p_show_rectangle_size, const Vector2i &p_rectangle_origin);
-	virtual void update_layout(EditorDock::DockLayout p_layout) {}
+	virtual void update_layout(EditorDock::DockLayout p_layout, EditorDock::DockSlot p_slot) {}
 };
 
 class TileMapLayerEditorTilesPlugin : public TileMapLayerSubEditorPlugin {
@@ -140,6 +140,7 @@ private:
 	void _update_toolbar();
 	void _update_transform_buttons();
 	void _set_transform_buttons_state(const Vector<Button *> &p_enabled_buttons, const Vector<Button *> &p_disabled_buttons, const String &p_why_disabled);
+	void _update_translation();
 
 	///// Tilemap editing. /////
 	bool has_mouse = false;
@@ -180,6 +181,9 @@ private:
 	TypedArray<Vector2i> _get_tile_map_selection() const;
 
 	RBSet<TileMapCell> tile_set_selection;
+
+	RandomPCG pattern_rng;
+	uint64_t rng_base_state = 0;
 
 	void _update_selection_pattern_from_tilemap_selection();
 	void _update_selection_pattern_from_tileset_tiles_selection();
@@ -260,7 +264,7 @@ public:
 	virtual Vector<TabData> get_tabs() const override;
 	virtual bool forward_canvas_gui_input(const Ref<InputEvent> &p_event) override;
 	virtual void forward_canvas_draw_over_viewport(Control *p_overlay) override;
-	virtual void update_layout(EditorDock::DockLayout p_layout) override;
+	virtual void update_layout(EditorDock::DockLayout p_layout, EditorDock::DockSlot p_slot) override;
 
 	virtual void edit(ObjectID p_tile_map_layer_id) override;
 
@@ -345,6 +349,7 @@ private:
 	void _update_terrains_tree();
 	void _update_tiles_list();
 	void _update_theme();
+	void _update_translation();
 
 	// Update callback
 	virtual void tile_set_changed() override;
@@ -353,7 +358,7 @@ public:
 	virtual Vector<TabData> get_tabs() const override;
 	virtual bool forward_canvas_gui_input(const Ref<InputEvent> &p_event) override;
 	virtual void forward_canvas_draw_over_viewport(Control *p_overlay) override;
-	virtual void update_layout(EditorDock::DockLayout p_layout) override;
+	virtual void update_layout(EditorDock::DockLayout p_layout, EditorDock::DockSlot p_slot) override;
 
 	virtual void edit(ObjectID p_tile_map_layer_id) override;
 
@@ -442,7 +447,7 @@ private:
 protected:
 	void _notification(int p_what);
 	void _draw_shape(Control *p_control, Rect2 p_region, TileSet::TileShape p_shape, TileSet::TileOffsetAxis p_offset_axis, Color p_color);
-	virtual void update_layout(DockLayout p_layout) override;
+	virtual void update_layout(DockLayout p_layout, DockSlot p_slot) override;
 
 public:
 	bool forward_canvas_gui_input(const Ref<InputEvent> &p_event);

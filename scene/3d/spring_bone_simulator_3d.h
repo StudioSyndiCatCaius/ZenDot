@@ -31,6 +31,14 @@
 #pragma once
 
 #include "scene/3d/skeleton_modifier_3d.h"
+#include "scene/resources/curve.h"
+
+#ifndef DISABLE_DEPRECATED
+namespace compat::SpringBoneSimulator3D {
+enum BoneDirection : int;
+enum RotationAxis : int;
+} //namespace compat::SpringBoneSimulator3D
+#endif
 
 #ifndef DISABLE_DEPRECATED
 namespace compat::SpringBoneSimulator3D {
